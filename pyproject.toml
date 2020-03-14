@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PavelGoshurenko_getdiff"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Pavel Goshurenko <goshurenkopl@gmail.com>"]
 
