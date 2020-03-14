@@ -1,14 +1,16 @@
 import json
 
+
 def dictionary2str(dictionary, mark):
     string = ''
     for index, value in dictionary.items():
         if len(mark) == 2:
-            string += "  {} {}: {}\n  {} {}: {}\n".format(mark[0], index, value[0], mark[1], index, value[1])
+            string += "  {} {}: {}\n  {} {}: {}\n".format(
+                mark[0], index, value[0], mark[1], index, value[1]
+                )
         else:
             string += "  {} {}: {}\n".format(mark, index, value)
     return string
-
 
 
 def generate_diff(path_to_file1, path_to_file2):
