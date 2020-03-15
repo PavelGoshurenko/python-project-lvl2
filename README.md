@@ -7,6 +7,10 @@ If you are interested, you can install it using the command:
 ...
 
 
-gendiff install and work
+gendiff install and work with json
 
 <a href="https://asciinema.org/a/CQ9azdFIttvbwXsmplfV0T4fD" target="_blank"><img src="https://asciinema.org/a/CQ9azdFIttvbwXsmplfV0T4fD.svg" /></a>
+
+gendiff install and work with YAML
+
+<a href="https://asciinema.org/a/1YXV0qMGSmeni7NbOv9iVaKAA" target="_blank"><img src="https://asciinema.org/a/1YXV0qMGSmeni7NbOv9iVaKAA.svg" /></a>

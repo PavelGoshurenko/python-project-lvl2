@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PavelGoshurenko_getdiff"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 authors = ["Pavel Goshurenko <goshurenkopl@gmail.com>"]
 
@@ -11,6 +11,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 pytest = "^5.4.1"
+PyYAML = "^5.3"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"

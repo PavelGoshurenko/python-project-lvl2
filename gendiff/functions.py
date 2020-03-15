@@ -1,4 +1,4 @@
-import json
+from gendiff.parsers import parse_file
 
 
 def dictionary2str(dictionary, mark):
@@ -14,8 +14,8 @@ def dictionary2str(dictionary, mark):
 
 
 def generate_diff(path_to_file1, path_to_file2):
-    before = json.load(open(path_to_file1))
-    after = json.load(open(path_to_file2))
+    before = parse_file(path_to_file1)
+    after = parse_file(path_to_file2)
     same = {}
     plus = {}
     minus = {}
