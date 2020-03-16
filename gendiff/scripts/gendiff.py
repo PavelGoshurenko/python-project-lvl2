@@ -3,6 +3,7 @@
 
 import argparse
 from gendiff.functions import generate_diff
+from gendiff.functions import render_diff
 
 
 def main():
