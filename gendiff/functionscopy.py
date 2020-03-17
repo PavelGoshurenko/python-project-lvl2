@@ -10,7 +10,7 @@ def dictionary2str(dictionary, mark):
             continue
         if len(mark) == 2:
             string += "  {} {}: {}\n  {} {}: {}\n".format(
-                mark[1], index, value[1], mark[0], index, value[0]
+                mark[0], index, value[0], mark[1], index, value[1]
                 )
         else:
             string += "  {} {}: {}\n".format(mark, index, value)
@@ -46,7 +46,7 @@ def gen_diff_between_dictionaries(before, after):
         elif  isinstance(after.get(index, None), dict) and isinstance(before.get(index, None), dict):
             diff['complex'][index] = gen_diff_between_dictionaries(before[index], after[index])
         else:
-            diff['change'][index] = (before[index], after[index])
+            diff['change'][index] = (after[index], before[index])
     for index, value in after.items():
         if before.get(index, None) is None:
             diff['plus'][index] = value
@@ -61,11 +61,10 @@ def render_diff(diff):
             string += render_diff(value) + ' \n'
     string += "{}{}{}{}".format(
     dictionary2str(diff['same'], ' '),
-    dictionary2str(diff['change'], '-+'),
+    dictionary2str(diff['change'], '+-'),
     dictionary2str(diff['minus'], '-'),
     dictionary2str(diff['plus'], '+')
     )
     string = "{\n" + string + "}"
     return string
-
 
