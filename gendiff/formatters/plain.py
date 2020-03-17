@@ -23,7 +23,7 @@ def plain_render(diff):
             text2 = 'complex value'
         else:
             text2 = value[1]
-        string += "Property '{}' was changed. From '{}' to '{}'\n".format(index, text1, text2)
+        string += "Property '{}' was changed. From '{}' to '{}'\n".format(index, text1, text2) # noqa E501
     for index in diff['minus'].keys():
         string += "Property '{}' was removed\n".format(index)
     for index, value in diff['plus'].items():
@@ -31,6 +31,5 @@ def plain_render(diff):
             text = 'complex value'
         else:
             text = value
-        string += "Property '{}' was added with value: '{}'\n".format(index, text)
+        string += "Property '{}' was added with value: '{}'\n".format(index, text) # noqa E501
     return string
-

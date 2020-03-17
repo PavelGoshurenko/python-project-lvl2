@@ -6,7 +6,7 @@ def dictionary2str(dictionary, mark):
     string = ''
     for index, value in dictionary.items():
         if isinstance(value, dict):
-            string += '  ' + mark + ' ' + index+ ': {\n' + dictionary2str(value, '   ') + '   }\n'
+            string += '  ' + mark + ' ' + index + ': {\n' + dictionary2str(value, '   ') + '   }\n' # noqa E501
             continue
         if len(mark) == 2:
             string += "  {} {}: {}\n  {} {}: {}\n".format(
@@ -15,7 +15,6 @@ def dictionary2str(dictionary, mark):
         else:
             string += "  {} {}: {}\n".format(mark, index, value)
     return string
-
 
 
 def generate_diff(path_to_file1, path_to_file2, format_):
@@ -28,8 +27,8 @@ def generate_diff(path_to_file1, path_to_file2, format_):
         render = render_diff(diff)
     return render
 
+
 def gen_diff_between_dictionaries(before, after):
-    
     diff = {
         'same': {},
         'plus': {},
@@ -43,15 +42,15 @@ def gen_diff_between_dictionaries(before, after):
             continue
         if after.get(index, None) == value:
             diff['same'][index] = value
-        elif  isinstance(after.get(index, None), dict) and isinstance(before.get(index, None), dict):
-            diff['complex'][index] = gen_diff_between_dictionaries(before[index], after[index])
+        elif  isinstance(after.get(index, None), dict) and isinstance(before.get(index, None), dict): # noqa E501
+            diff['complex'][index] = gen_diff_between_dictionaries(before[index], after[index]) # noqa E501
         else:
             diff['change'][index] = (before[index], after[index])
     for index, value in after.items():
         if before.get(index, None) is None:
             diff['plus'][index] = value
     return diff
-    
+
 
 def render_diff(diff):
     string = ''
@@ -60,12 +59,10 @@ def render_diff(diff):
             string += '  ' + index + ': '
             string += render_diff(value) + ' \n'
     string += "{}{}{}{}".format(
-    dictionary2str(diff['same'], ' '),
-    dictionary2str(diff['change'], '-+'),
-    dictionary2str(diff['minus'], '-'),
-    dictionary2str(diff['plus'], '+')
-    )
+        dictionary2str(diff['same'], ' '),
+        dictionary2str(diff['change'], '-+'),
+        dictionary2str(diff['minus'], '-'),
+        dictionary2str(diff['plus'], '+')
+        )
     string = "{\n" + string + "}"
     return string
-
-
