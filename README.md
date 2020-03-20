@@ -14,3 +14,15 @@ gendiff install and work with json
 gendiff install and work with YAML
 
 <a href="https://asciinema.org/a/1YXV0qMGSmeni7NbOv9iVaKAA" target="_blank"><img src="https://asciinema.org/a/1YXV0qMGSmeni7NbOv9iVaKAA.svg" /></a>
+
+gendiff install and work with multidimensional json 
+
+<a href="https://asciinema.org/a/D74jBt448QG5nw4BXHVOuLtDg" target="_blank"><img src="https://asciinema.org/a/D74jBt448QG5nw4BXHVOuLtDg.svg" /></a>
+
+gendiff install and work with json (result in plain format) 
+
+<a href="https://asciinema.org/a/GTU9N8TcIDY3FxukrfC22iBns" target="_blank"><img src="https://asciinema.org/a/GTU9N8TcIDY3FxukrfC22iBns.svg" /></a>
+
+gendiff install and work with yml (result in json format) 
+
+<a href="https://asciinema.org/a/9mwNlVOyiWIYKX3mxCJKsnOFF" target="_blank"><img src="https://asciinema.org/a/9mwNlVOyiWIYKX3mxCJKsnOFF.svg" /></a>

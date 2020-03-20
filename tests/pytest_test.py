@@ -42,3 +42,16 @@ def test_yml_plain_format():
     correct_result = f.read()
     f.close()
     assert correct_result == generate_diff('./tests/fixtures/before_nested.yml', './tests/fixtures/after_nested.yml', 'plain')
+
+def test_json2json_format():
+    f = open('./tests/fixtures/test_result_json.txt', 'r')
+    correct_result = f.read()
+    f.close()
+    assert correct_result == generate_diff('./tests/fixtures/before_nested.json', './tests/fixtures/after_nested.json', 'json')
+
+
+def test_yml2json_format():
+    f = open('./tests/fixtures/test_result_json.txt', 'r')
+    correct_result = f.read()
+    f.close()
+    assert correct_result == generate_diff('./tests/fixtures/before_nested.yml', './tests/fixtures/after_nested.yml', 'json')

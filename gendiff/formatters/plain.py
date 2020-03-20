@@ -1,5 +1,3 @@
-
-
 def add_parent_name(child, parent_name):
     result = {}
     for index, value in child.items():

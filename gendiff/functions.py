@@ -1,20 +1,7 @@
 from gendiff.parsers import parse_file
 from gendiff.formatters.plain import plain_render
-
-
-def dictionary2str(dictionary, mark):
-    string = ''
-    for index, value in dictionary.items():
-        if isinstance(value, dict):
-            string += '  ' + mark + ' ' + index + ': {\n' + dictionary2str(value, '   ') + '   }\n' # noqa E501
-            continue
-        if len(mark) == 2:
-            string += "  {} {}: {}\n  {} {}: {}\n".format(
-                mark[1], index, value[1], mark[0], index, value[0]
-                )
-        else:
-            string += "  {} {}: {}\n".format(mark, index, value)
-    return string
+from gendiff.formatters.json import json_render
+from gendiff.formatters.text import text_render
 
 
 def generate_diff(path_to_file1, path_to_file2, format_):
@@ -23,8 +10,10 @@ def generate_diff(path_to_file1, path_to_file2, format_):
     diff = gen_diff_between_dictionaries(before, after)
     if format_ == 'plain':
         render = plain_render(diff)
+    elif format_ == 'json':
+        render = json_render(diff)
     else:
-        render = render_diff(diff)
+        render = text_render(diff)
     return render
 
 
@@ -50,19 +39,3 @@ def gen_diff_between_dictionaries(before, after):
         if before.get(index, None) is None:
             diff['plus'][index] = value
     return diff
-
-
-def render_diff(diff):
-    string = ''
-    if len(diff['complex']) > 0:
-        for index, value in diff['complex'].items():
-            string += '  ' + index + ': '
-            string += render_diff(value) + ' \n'
-    string += "{}{}{}{}".format(
-        dictionary2str(diff['same'], ' '),
-        dictionary2str(diff['change'], '-+'),
-        dictionary2str(diff['minus'], '-'),
-        dictionary2str(diff['plus'], '+')
-        )
-    string = "{\n" + string + "}"
-    return string
