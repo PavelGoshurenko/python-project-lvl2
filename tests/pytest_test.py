@@ -1,57 +1,14 @@
 import pytest
-from gendiff.functions import generate_diff
+from gendiff.generate_diff import generate_diff, format
+from tests.test_data import TEST_DATA, BEFORE, AFTER, FORMAT, ANSWER
 
 
-def test_json():
-    f = open('./tests/fixtures/test_result.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before.json', './tests/fixtures/after.json', '')
-
-
-def test_yml():
-    f = open('./tests/fixtures/test_result.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before.yml', './tests/fixtures/after.yml', '')
-
-
-def test_nested_json():
-    f = open('./tests/fixtures/test_result_nested.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before_nested.json', './tests/fixtures/after_nested.json', '')
-
-
-def test_nested_yml():
-    f = open('./tests/fixtures/test_result_nested.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before_nested.yml', './tests/fixtures/after_nested.yml', '')
-
-
-def test_json_plane_format():
-    f = open('./tests/fixtures/test_result_plain.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before_nested.json', './tests/fixtures/after_nested.json', 'plain')
-
-
-def test_yml_plain_format():
-    f = open('./tests/fixtures/test_result_plain.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before_nested.yml', './tests/fixtures/after_nested.yml', 'plain')
-
-def test_json2json_format():
-    f = open('./tests/fixtures/test_result_json.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before_nested.json', './tests/fixtures/after_nested.json', 'json')
-
-
-def test_yml2json_format():
-    f = open('./tests/fixtures/test_result_json.txt', 'r')
-    correct_result = f.read()
-    f.close()
-    assert correct_result == generate_diff('./tests/fixtures/before_nested.yml', './tests/fixtures/after_nested.yml', 'json')
+def test():
+    for test_data in TEST_DATA.values():
+        with open(test_data[ANSWER], 'r') as file:
+            correct_result = file.read()
+        assert correct_result == format(
+            generate_diff(test_data[BEFORE],
+            test_data[AFTER]),
+            test_data[FORMAT]
+            )

@@ -1,3 +1,6 @@
+from gendiff.constants import SAME, ADDED, REMOVED, CHANGED
+
+
 def dict2string(dictionary_or_str):
     string = ''
     if isinstance(dictionary_or_str, dict):
@@ -9,20 +12,20 @@ def dict2string(dictionary_or_str):
 
 def text_prerender(diff):
     string = ''
-    if len(diff['complex']) > 0:
-        for index, value in diff['complex'].items():
-            string += "  {}: {{\n{}  }}\n".format(index, text_prerender(value))
-    for index, value in diff['same'].items():
-        string += "    {}: {}\n".format(index, dict2string(value))
-    for index, value in diff['change'].items():
-        string += "  + {}: {}\n".format(index, dict2string(value[1]))
-        string += "  - {}: {}\n".format(index, dict2string(value[0]))
-    for index, value in diff['minus'].items():
-        string += "  - {}: {}\n".format(index, dict2string(value))
-    for index, value in diff['plus'].items():
-        string += "  + {}: {}\n".format(index, dict2string(value))
+    for key, value in diff.items():
+        if isinstance(value, dict):
+            string += "  {}: {{\n{}  }}\n".format(key, text_prerender(value))
+        elif value[0] == SAME:
+            string += "    {}: {}\n".format(key, dict2string(value[1]))
+        elif value[0] == CHANGED:
+            string += "  + {}: {}\n".format(key, dict2string(value[2]))
+            string += "  - {}: {}\n".format(key, dict2string(value[1]))
+        elif value[0] == REMOVED:
+            string += "  - {}: {}\n".format(key, dict2string(value[1]))
+        elif value[0] == ADDED:
+            string += "  + {}: {}\n".format(key, dict2string(value[1]))
     return string
 
 
-def text_render(diff):
+def format(diff):
     return "{{\n{}}}".format(text_prerender(diff))

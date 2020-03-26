@@ -12,9 +12,9 @@
     }
   }
   group1: {
-    foo: bar
   + baz: bars
   - baz: bas
+    foo: bar
   }
   - group2: {
         abc: 12345
