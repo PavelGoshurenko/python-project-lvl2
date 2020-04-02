@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PavelGoshurenko_getdiff"
-version = "0.7.0"
+version = "0.8.0"
 description = "Find differences between JSON or YAML files"
 authors = ["Pavel Goshurenko <goshurenkopl@gmail.com>"]
 repository = "https://github.com/PavelGoshurenko/python-project-lvl2"

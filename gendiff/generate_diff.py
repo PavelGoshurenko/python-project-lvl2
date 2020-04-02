@@ -1,9 +1,8 @@
 from gendiff.parsers import parse_file
-from gendiff import formatters
-from gendiff.constants import SAME, ADDED, REMOVED, CHANGED
+from gendiff.constants import SAME, ADDED, REMOVED, CHANGED, NESTED
 
 
-def gen_diff_between_dict(before, after):
+def gen_diff_betw_dict(before, after):
     before_keys = before.keys()
     after_keys = after.keys()
     diff = {}
@@ -11,9 +10,9 @@ def gen_diff_between_dict(before, after):
         if before[key] == after[key]:
             diff[key] = (SAME, before[key])
         elif isinstance(after[key], dict) and isinstance(before[key], dict):
-            diff[key] = gen_diff_between_dict(before[key], after[key])
+            diff[key] = (NESTED, gen_diff_betw_dict(before[key], after[key]))
         else:
-            diff[key] = (CHANGED, before[key], after[key])
+            diff[key] = (CHANGED, (before[key], after[key]))
     for key in sorted(before_keys - after_keys):
         diff[key] = (REMOVED, before[key])
     for key in sorted(after_keys - before_keys):
@@ -21,16 +20,8 @@ def gen_diff_between_dict(before, after):
     return diff
 
 
-def format(diff, format_type=formatters.DEFAULT):
-    if format_type == formatters.PLAIN:
-        return formatters.plain(diff)
-    elif format_type == formatters.JSON:
-        return formatters.json(diff)
-    return formatters.default(diff)
-
-
 def generate_diff(path_to_file1, path_to_file2):
     before = parse_file(path_to_file1)
     after = parse_file(path_to_file2)
-    diff = gen_diff_between_dict(before, after)
+    diff = gen_diff_betw_dict(before, after)
     return diff

@@ -1,4 +1,4 @@
-from gendiff.constants import SAME, ADDED, REMOVED, CHANGED
+from gendiff.constants import SAME, ADDED, REMOVED, CHANGED, NESTED
 
 
 def dict2string(dictionary_or_str):
@@ -11,21 +11,22 @@ def dict2string(dictionary_or_str):
 
 
 def text_prerender(diff):
-    string = ''
-    for key, value in diff.items():
-        if isinstance(value, dict):
-            string += "  {}: {{\n{}  }}\n".format(key, text_prerender(value))
-        elif value[0] == SAME:
-            string += "    {}: {}\n".format(key, dict2string(value[1]))
-        elif value[0] == CHANGED:
-            string += "  + {}: {}\n".format(key, dict2string(value[2]))
-            string += "  - {}: {}\n".format(key, dict2string(value[1]))
-        elif value[0] == REMOVED:
-            string += "  - {}: {}\n".format(key, dict2string(value[1]))
-        elif value[0] == ADDED:
-            string += "  + {}: {}\n".format(key, dict2string(value[1]))
-    return string
+    list_of_str = []
+    for key, (status, value) in diff.items():
+        if status == NESTED:
+            list_of_str.append("  {}: {{\n{}\n  }}".format(key, text_prerender(value))) # noqa E501
+        elif status == SAME:
+            list_of_str.append("    {}: {}".format(key, dict2string(value)))
+        elif status == CHANGED:
+            old, new = value
+            list_of_str.append("  + {}: {}".format(key, dict2string(new)))
+            list_of_str.append("  - {}: {}".format(key, dict2string(old)))
+        elif status == REMOVED:
+            list_of_str.append("  - {}: {}".format(key, dict2string(value)))
+        elif status == ADDED:
+            list_of_str.append("  + {}: {}".format(key, dict2string(value)))
+    return '\n'.join(list_of_str)
 
 
 def format(diff):
-    return "{{\n{}}}".format(text_prerender(diff))
+    return "{{\n{}\n}}".format(text_prerender(diff))

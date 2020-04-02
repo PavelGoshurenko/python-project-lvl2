@@ -1,6 +1,7 @@
 import pytest
-from gendiff.generate_diff import generate_diff, format
+from gendiff.generate_diff import generate_diff
 from tests.test_data import TEST_DATA, BEFORE, AFTER, FORMAT, ANSWER
+from gendiff.formatters import format
 
 
 def test():
